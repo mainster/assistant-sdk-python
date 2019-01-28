@@ -21,8 +21,27 @@ import argparse
 import json
 import os.path
 import pathlib2 as pathlib
+import pycurl
+import requests
+
+data1 = {
+    'm': 'json',
+    'r': 'grp',
+    'fn': 'write',
+    'alias': '2/0/31',
+    'value': 'false'
+    }
+
+data2 = {
+    'm': 'json',
+    'r': 'grp',
+    'fn': 'write',
+    'alias': '2/0/31',
+    'value': 'true'
+    }
 
 import google.oauth2.credentials
+import RPi.GPIO as GPIO
 
 from google.assistant.library import Assistant
 from google.assistant.library.event import EventType
@@ -64,7 +83,29 @@ def process_event(event):
     if event.type == EventType.ON_DEVICE_ACTION:
         for command, params in event.actions:
             print('Do command', command, 'with params', str(params))
+            if command == "action.devices.commands.OnOff":
+                if params['on']:
+                    print('Turning the LED on.')
+                    GPIO.output(25, 1)
+                else:
+                    print('Turning the LED off.')
+                    GPIO.output(25, 0)
 
+            if command == "action.devices.commands.BrightnessAbsolute":
+                if params['brightness']:
+                    if params['brightness'] > 50:
+                        print('brightness > 50')
+                    else:
+                        print('brightness <= 50')
+
+            if command == "action.devices.commands.ColorAbsolute":
+                if params['color']:
+                    if params['color'].get('name') == "blue":
+                        response = requests.post('http://homelynk.fritz.box/scada-remote', data=data1, auth=('admin', 'Sommerberg123'))
+                        response.close()
+                    else:
+                        response = requests.post('http://homelynk.fritz.box/scada-remote', data=data2, auth=('admin', 'Sommerberg123'))
+                        response.close()
 
 def main():
     parser = argparse.ArgumentParser(
@@ -131,6 +172,11 @@ def main():
         device_id = assistant.device_id
         print('device_model_id:', device_model_id)
         print('device_id:', device_id + '\n')
+        
+        # This sample uses the GPIO.BCM option, which refers to pins by their 
+        # Broadcom numbering. BCM 25 refers to physical pin 22 on the Raspberry Pi 3.
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(25, GPIO.OUT, initial=GPIO.HIGH)
 
         # Re-register if "device_id" is different from the last "device_id":
         if should_register or (device_id != last_device_id):

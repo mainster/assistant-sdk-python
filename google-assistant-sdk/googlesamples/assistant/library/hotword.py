@@ -21,7 +21,6 @@ import argparse
 import json
 import os.path
 import pathlib2 as pathlib
-import pycurl
 import requests
 
 data1 = {
@@ -90,6 +89,9 @@ def process_event(event):
                 else:
                     DD['value'] = 'false'
 
+                response = requests.post('http://homelynk.fritz.box/scada-remote', data=DD, auth=('admin', 'Sommerberg123'))
+                response.close()
+
             if command == "action.devices.commands.BrightnessAbsolute":
                 if params['brightness']:
                     if params['brightness'] > 0.0:
@@ -99,8 +101,8 @@ def process_event(event):
                         DD = data1
                         DD['value'] = 'false'
 
-                    response = requests.post('http://homelynk.fritz.box/scada-remote', data=DD, auth=('admin', 'Sommerberg123'))
-                    response.close()
+                response = requests.post('http://homelynk.fritz.box/scada-remote', data=DD, auth=('admin', 'Sommerberg123'))
+                response.close()
             print(DD)
 
 

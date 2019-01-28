@@ -84,17 +84,16 @@ def process_event(event):
         for command, params in event.actions:
             print('Do command', command, 'with params', str(params))
             if command == "action.devices.commands.OnOff":
+                DD = data1
                 if params['on']:
-                    print('Turning the LED on.')
-                    GPIO.output(25, 1)
+                    DD['value'] = 'true'                    
                 else:
-                    print('Turning the LED off.')
-                    GPIO.output(25, 0)
+                    DD['value'] = 'false'
 
             if command == "action.devices.commands.BrightnessAbsolute":
+                DD = dataDimm
                 if params['brightness']:
-                    if params['brightness'] != '0':
-                        DD = dataDimm
+                    if params['brightness'] > '0':
                         DD['value'] = params['brightness']
                     else:
                         DD = data1

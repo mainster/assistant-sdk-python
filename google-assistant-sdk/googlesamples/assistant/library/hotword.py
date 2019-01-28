@@ -101,9 +101,9 @@ def process_event(event):
                         DD = data1
                         DD['value'] = 'false'
 
-                response = requests.post('http://homelynk.fritz.box/scada-remote', data=DD, auth=('admin', 'Sommerberg123'))
-                response.close()
-            print(DD)
+                    response = requests.post('http://homelynk.fritz.box/scada-remote', data=DD, auth=('admin', 'Sommerberg123'))
+                    response.close()
+                    print(DD)
 
 
 def main():

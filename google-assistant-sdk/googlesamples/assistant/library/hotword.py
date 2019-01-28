@@ -93,20 +93,16 @@ def process_event(event):
 
             if command == "action.devices.commands.BrightnessAbsolute":
                 if params['brightness']:
-                    dataDimm['value'] = params['brightness']
+                    if params['brightness'] == '0':
+                        DD = data1;
+                        DD['value'] = 'false'
+                    else:
+                        DD = dataDimm:
+                        DD['value'] = params['brightness']
 
-                response = requests.post('http://homelynk.fritz.box/scada-remote', data=dataDimm, auth=('admin', 'Sommerberg123'))
+                response = requests.post('http://homelynk.fritz.box/scada-remote', data=DD, auth=('admin', 'Sommerberg123'))
                 response.close()
 
-
-            if command == "action.devices.commands.ColorAbsolute":
-                if params['color']:
-                    if params['color'].get('name') == "blue":
-                        data1['value']='true'
-                    else:
-                        data1['value']='false'
-                    response = requests.post('http://homelynk.fritz.box/scada-remote', data=data1, auth=('admin', 'Sommerberg123'))
-                    response.close()
 
 def main():
     parser = argparse.ArgumentParser(

@@ -32,14 +32,6 @@ data1 = {
     'value': 'false'
     }
 
-data2 = {
-    'm': 'json',
-    'r': 'grp',
-    'fn': 'write',
-    'alias': '2/0/31',
-    'value': 'true'
-    }
-
 import google.oauth2.credentials
 import RPi.GPIO as GPIO
 
@@ -101,11 +93,12 @@ def process_event(event):
             if command == "action.devices.commands.ColorAbsolute":
                 if params['color']:
                     if params['color'].get('name') == "blue":
-                        response = requests.post('http://homelynk.fritz.box/scada-remote', data=data1, auth=('admin', 'Sommerberg123'))
-                        response.close()
+                        data1.value = True
                     else:
-                        response = requests.post('http://homelynk.fritz.box/scada-remote', data=data2, auth=('admin', 'Sommerberg123'))
-                        response.close()
+                        data1.value = False
+
+                    response = requests.post('http://homelynk.fritz.box/scada-remote', data=data1, auth=('admin', 'Sommerberg123'))
+                    response.close()
 
 def main():
     parser = argparse.ArgumentParser(

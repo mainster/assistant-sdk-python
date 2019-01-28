@@ -29,7 +29,7 @@ data1 = {
     'r': 'grp',
     'fn': 'write',
     'alias': '2/0/31',
-    'value': False
+    'value': 'false'
     }
 
 dataDimm = {

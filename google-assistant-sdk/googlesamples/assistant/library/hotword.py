@@ -101,6 +101,7 @@ def process_event(event):
 
                     response = requests.post('http://homelynk.fritz.box/scada-remote', data=DD, auth=('admin', 'Sommerberg123'))
                     response.close()
+            print(DD)
 
 
 def main():

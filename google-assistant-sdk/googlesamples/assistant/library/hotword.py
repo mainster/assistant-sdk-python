@@ -32,6 +32,14 @@ data1 = {
     'value': 'false'
     }
 
+dataDimm = {
+    'm': 'json',
+    'r': 'grp',
+    'fn': 'write',
+    'alias': '2/3/0',
+    'value': '0.4'
+    }    
+
 import google.oauth2.credentials
 import RPi.GPIO as GPIO
 
@@ -85,10 +93,8 @@ def process_event(event):
 
             if command == "action.devices.commands.BrightnessAbsolute":
                 if params['brightness']:
-                    if params['brightness'] > 50:
-                        print('brightness > 50')
-                    else:
-                        print('brightness <= 50')
+                    dataDimm['value'] = params['brightness']
+
 
             if command == "action.devices.commands.ColorAbsolute":
                 if params['color']:

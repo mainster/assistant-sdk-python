@@ -93,7 +93,7 @@ def process_event(event):
             if command == "action.devices.commands.BrightnessAbsolute":
                 DD = dataDimm
                 if params['brightness']:
-                    if params['brightness'] > '0':
+                    if params['brightness'] > 0:
                         DD['value'] = params['brightness']
                     else:
                         DD = data1

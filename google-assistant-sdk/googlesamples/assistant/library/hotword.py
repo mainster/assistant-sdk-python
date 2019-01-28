@@ -94,10 +94,10 @@ def process_event(event):
             if command == "action.devices.commands.BrightnessAbsolute":
                 if params['brightness']:
                     if params['brightness'] == '0':
-                        DD = data1;
+                        DD = data1
                         DD['value'] = 'false'
                     else:
-                        DD = dataDimm:
+                        DD = dataDimm
                         DD['value'] = params['brightness']
 
                 response = requests.post('http://homelynk.fritz.box/scada-remote', data=DD, auth=('admin', 'Sommerberg123'))

@@ -95,6 +95,9 @@ def process_event(event):
                 if params['brightness']:
                     dataDimm['value'] = params['brightness']
 
+                response = requests.post('http://homelynk.fritz.box/scada-remote', data=dataDimm, auth=('admin', 'Sommerberg123'))
+                response.close()
+
 
             if command == "action.devices.commands.ColorAbsolute":
                 if params['color']:
@@ -102,7 +105,6 @@ def process_event(event):
                         data1['value']='true'
                     else:
                         data1['value']='false'
-
                     response = requests.post('http://homelynk.fritz.box/scada-remote', data=data1, auth=('admin', 'Sommerberg123'))
                     response.close()
 

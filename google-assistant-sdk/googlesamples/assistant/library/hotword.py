@@ -93,9 +93,9 @@ def process_event(event):
             if command == "action.devices.commands.ColorAbsolute":
                 if params['color']:
                     if params['color'].get('name') == "blue":
-                        data1.value = True
+                        data1['value']='true'
                     else:
-                        data1.value = False
+                        data1['value']='false'
 
                     response = requests.post('http://homelynk.fritz.box/scada-remote', data=data1, auth=('admin', 'Sommerberg123'))
                     response.close()

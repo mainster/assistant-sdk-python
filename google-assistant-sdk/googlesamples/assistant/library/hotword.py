@@ -29,7 +29,7 @@ data1 = {
     'r': 'grp',
     'fn': 'write',
     'alias': '2/0/31',
-    'value': 'false'
+    'value': False
     }
 
 dataDimm = {
@@ -37,7 +37,7 @@ dataDimm = {
     'r': 'grp',
     'fn': 'write',
     'alias': '2/3/0',
-    'value': '0.4'
+    'value': 0.4
     }    
 
 import google.oauth2.credentials
@@ -86,9 +86,9 @@ def process_event(event):
             if command == "action.devices.commands.OnOff":
                 DD = data1
                 if params['on']:
-                    DD['value'] = 'true'                    
+                    DD['value'] = True                    
                 else:
-                    DD['value'] = 'false'
+                    DD['value'] = False
 
             if command == "action.devices.commands.BrightnessAbsolute":
                 DD = dataDimm
@@ -97,7 +97,7 @@ def process_event(event):
                         DD['value'] = params['brightness']
                     else:
                         DD = data1
-                        DD['value'] = 'false'
+                        DD['value'] = False
 
                     response = requests.post('http://homelynk.fritz.box/scada-remote', data=DD, auth=('admin', 'Sommerberg123'))
                     response.close()
